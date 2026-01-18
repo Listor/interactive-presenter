@@ -8,9 +8,18 @@ export const SLIDES = [
     poll: null,
     title: (
       <>
-        Was ist <GlitchWord original="echt" glitch="fake" /> in <nobr>Social-Media?</nobr>
+        Was ist <GlitchWord original="echt" glitch="fake" /> in{' '}
+        <nobr>Social-Media?</nobr>
       </>
     ),
+  },
+  {
+    id: 'slide-welcome-001',
+    type: 'image',
+    url: '/background.png',
+    poll: null,
+    headline: 'Willkommen',
+    shim: true,
   },
   {
     id: 'slide-code-001',

@@ -40,19 +40,37 @@ const Slide = ({ data, isActive }) => {
     ) : (
       <div>
         <img src={data.url} alt="Background Image" style={style} />
-        <NetworkNode x="19.45%" y="67.6%" color="#2aa7ff" size={8} />
-        <NetworkNode x="70.8%" y="62.4%" color="#ff3b3b" size={5} />
-        <NetworkNode x="61.25%" y="83.2%" color="#2aa7ff" size={5} />
+
+        {data.shim && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              zIndex: 1,
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+        <div className="network-nodes">
+          <NetworkNode x="19.45%" y="67.6%" color="#2aa7ff" size={8} />
+          <NetworkNode x="70.8%" y="62.4%" color="#ff3b3b" size={5} />
+          <NetworkNode x="61.25%" y="83.2%" color="#2aa7ff" size={5} />
+        </div>
       </div>
     );
 
   return (
     <>
       {content}
-      
+
       {/* Cover Title - Outside Box, Centered, Print Look */}
       {data.title && (
-        <div style={{
+        <div
+          style={{
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -61,20 +79,21 @@ const Slide = ({ data, isActive }) => {
             maxWidth: '1200px',
             textAlign: 'left',
             zIndex: 10,
-            textShadow: '0 2px 10px rgba(0,0,0,0.5)'
-        }}>
-            <h1 
-                style={{ 
-                    fontSize: '5rem', 
-                    lineHeight: '1.1', 
-                    margin: 0, 
-                    fontWeight: 900,
-                    letterSpacing: '-2px',
-                    color: '#fff'
-                }}
-            >
-                {data.title}
-            </h1>
+            textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+          }}
+        >
+          <h1
+            style={{
+              fontSize: '5rem',
+              lineHeight: '1.1',
+              margin: 0,
+              fontWeight: 900,
+              letterSpacing: '-2px',
+              color: '#fff',
+            }}
+          >
+            {data.title}
+          </h1>
         </div>
       )}
 
