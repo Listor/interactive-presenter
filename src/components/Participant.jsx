@@ -60,7 +60,6 @@ const Participant = ({
 
         // If we want to be controller, request it
         if (wantsController) {
-          console.log(`🎮 Requesting controller role with ID: ${myPeerId}`);
           conn.send({ type: MSG.REQUEST_CONTROLLER, payload: myPeerId });
         }
       });
@@ -68,17 +67,11 @@ const Participant = ({
       conn.on('data', (data) => {
         const { type, payload } = data;
 
-        console.log('data', data);
-
         // Handle controller registration responses
         if (type === MSG.CONTROLLER_ACCEPTED) {
-          console.log(`✅ Controller request accepted!`);
           if (onControllerAccepted) onControllerAccepted();
           return;
         } else if (type === MSG.CONTROLLER_REJECTED) {
-          console.log(
-            `🚫 Controller request rejected. Active controller: ${payload}`
-          );
           alert(
             `Another controller is already active. You'll stay as a participant.`
           );
@@ -188,14 +181,16 @@ const Participant = ({
       {/* Top Section: Stats & Status */}
       <div>
         <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-          <h1 style={{ margin: 0, fontSize: '1.5rem' }}>Join In!</h1>
+          <h1 style={{ margin: 0, fontSize: '1.5rem' }}>
+            Was ist echt in Social-Media?
+          </h1>
           <p
             style={{
               color: connected ? '#4caf50' : '#f44336',
               margin: '0.5rem 0',
             }}
           >
-            {connected ? '● LIVE' : '○ DISCONNECTED'}
+            {connected ? '● VERBUNDEN' : '○ NICHT VERBUNDEN'}
           </p>
         </div>
 
@@ -215,7 +210,7 @@ const Participant = ({
                 textTransform: 'uppercase',
               }}
             >
-              My Score
+              Meine Punkte
             </span>
             <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
               {stats.correct} / {stats.total}
@@ -237,7 +232,7 @@ const Participant = ({
               marginBottom: '1rem',
             }}
           >
-            {feedback === 'correct' ? '🎉 Correct!' : '❌ Wrong'}
+            {feedback === 'correct' ? '🎉 Richtig!' : '❌ Falsch'}
           </div>
         )}
       </div>
@@ -253,7 +248,7 @@ const Participant = ({
           textAlign: 'center',
         }}
       >
-        <p>Wait for poll...</p>
+        <p>Warte auf die Abstimmung...</p>
       </div>
 
       {/* Bottom Section: Reactions */}

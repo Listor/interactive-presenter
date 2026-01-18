@@ -11,7 +11,6 @@ const getControllerID = () => {
   for (let cookie of cookies) {
     const [name, value] = cookie.trim().split('=');
     if (name === cookieName) {
-      console.log(`🔄 Reusing existing controller ID from cookie`);
       return value;
     }
   }
@@ -21,7 +20,6 @@ const getControllerID = () => {
   const expires = new Date(Date.now() + 30 * 60 * 1000).toUTCString();
   document.cookie = `${cookieName}=${newId}; expires=${expires}; path=/; SameSite=Strict`;
 
-  console.log(`🆕 Generated new controller ID: ${newId}`);
   return newId;
 };
 
@@ -42,8 +40,6 @@ const Controller = () => {
   const connRef = useRef(null);
 
   useEffect(() => {
-    console.log(`🎮 Connecting with controller ID: ${controllerId}`);
-
     const peer = new Peer(controllerId, PEER_CONFIG);
 
     peer.on('open', () => {

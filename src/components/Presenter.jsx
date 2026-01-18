@@ -165,20 +165,15 @@ const Presenter = () => {
         activeControllerIdRef.current = requesterId;
         setActiveControllerId(requesterId);
         conn.send({ type: MSG.CONTROLLER_ACCEPTED, payload: requesterId });
-        console.log(`✅ Controller accepted: ${requesterId}`);
       } else if (currentActive === requesterId) {
         // This is the current controller reconnecting
         conn.send({ type: MSG.CONTROLLER_ACCEPTED, payload: requesterId });
-        console.log(`🔄 Controller reconnected: ${requesterId}`);
       } else {
         // Already have a different controller
         conn.send({
           type: MSG.CONTROLLER_REJECTED,
           payload: currentActive,
         });
-        console.log(
-          `🚫 Controller rejected: ${requesterId} (active: ${currentActive})`
-        );
       }
       return;
     }
@@ -198,9 +193,6 @@ const Presenter = () => {
       isControllerCommand &&
       conn.peer.trim() !== activeControllerIdRef.current?.trim()
     ) {
-      console.log(
-        `🚫 Blocked command from non-controller: "${conn.peer}" (Active is: "${activeControllerIdRef.current}")`
-      );
       return;
     }
 
@@ -279,7 +271,6 @@ const Presenter = () => {
 
     // Prevent restart if already done
     if (stateRef.current.completedPollIds.has(slide.id)) {
-      console.log('Poll already completed for this slide');
       return;
     }
 
