@@ -18,14 +18,14 @@ function App() {
       if (isPresenterParam === 'true') {
         localStorage.setItem('role', 'presenter');
         setRole('presenter');
-        window.history.replaceState({}, '', '/');
+        window.history.replaceState({}, '', window.location.pathname);
         return;
       }
 
       if (isControllerParam === 'true') {
         localStorage.setItem('role', 'controller');
         setRole('controller');
-        window.history.replaceState({}, '', '/');
+        window.history.replaceState({}, '', window.location.pathname);
         return;
       }
 

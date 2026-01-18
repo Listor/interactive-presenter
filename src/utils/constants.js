@@ -1,4 +1,4 @@
-export const PRESENTER_PEER_ID = 'presenter-unique-id-v1';
+export const PRESENTER_PEER_ID = `presenter-${window.location.hostname.replace(/\./g, '-')}`;
 
 // Server Configuration - easy to toggle between local and prod
 export const PEER_SERVER_HOST =
