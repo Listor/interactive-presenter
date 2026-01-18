@@ -479,7 +479,7 @@ const Presenter = () => {
       >
         <span>{connectionCount}</span>
         <img
-          src="/icons/users.svg"
+          src="icons/users.svg"
           alt="Users"
           style={{ width: '20px', height: '20px' }}
         />

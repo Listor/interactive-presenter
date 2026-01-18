@@ -205,7 +205,7 @@ const Controller = () => {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
           <img
-            src="/icons/users.svg"
+            src="icons/users.svg"
             alt="Users"
             style={{ width: '20px', height: '20px' }}
           />

@@ -4,7 +4,7 @@ export const SLIDES = [
   {
     id: 'slide-nature-001',
     type: 'image',
-    url: '/background.png',
+    url: 'background.png',
     poll: null,
     title: (
       <>
@@ -16,7 +16,7 @@ export const SLIDES = [
   {
     id: 'slide-welcome-001',
     type: 'image',
-    url: '/background.png',
+    url: 'background.png',
     poll: null,
     headline: 'Willkommen',
     shim: true,
@@ -24,7 +24,7 @@ export const SLIDES = [
   {
     id: 'slide-code-001',
     type: 'image',
-    url: '/background.png',
+    url: 'background.png',
     poll: {
       question: 'What is the best programming language?',
       options: ['JavaScript', 'Python', 'Rust', 'Go'],
@@ -34,13 +34,13 @@ export const SLIDES = [
   {
     id: 'slide-beach-001',
     type: 'image',
-    url: '/background.png',
+    url: 'background.png',
     poll: null,
   },
   {
     id: 'slide-ai-001',
     type: 'image',
-    url: '/background.png',
+    url: 'background.png',
     poll: {
       question: 'Is this image AI generated?',
       options: ['Yes', 'No'],
