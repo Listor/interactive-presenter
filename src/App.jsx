@@ -5,7 +5,6 @@ import Controller from './components/Controller';
 import LandscapePrompt from './components/LandscapePrompt';
 import { PEER_CONFIG } from './utils/constants';
 
-
 function App() {
   const [role, setRole] = useState(null); // 'presenter' | 'controller' | 'participant'
 
@@ -33,7 +32,7 @@ function App() {
       // 2. Check Connection to decide fallback
       try {
         await fetch(
-          `http://${PEER_CONFIG.host}:${PEER_CONFIG.port}${PEER_CONFIG.path}`,
+          `https://${PEER_CONFIG.host}:${PEER_CONFIG.port}${PEER_CONFIG.path}`,
           {
             method: 'HEAD',
             mode: 'no-cors', // We just care if it connects, not the response

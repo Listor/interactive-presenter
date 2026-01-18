@@ -1,9 +1,10 @@
 export const PRESENTER_PEER_ID = 'presenter-unique-id-v1';
 
 // Server Configuration - easy to toggle between local and prod
-export const PEER_SERVER_HOST = 'ballast.proxy.rlwy.net';
+export const PEER_SERVER_HOST =
+  'interactive-presenter-server-production.up.railway.app';
 // export const PEER_SERVER_HOST = window.location.hostname; // Local Dev
-export const PEER_SERVER_PORT = 20047;
+export const PEER_SERVER_PORT = 443;
 
 export const PEER_CONFIG = {
   host: PEER_SERVER_HOST,
