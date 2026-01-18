@@ -7,6 +7,7 @@ import { PEER_CONFIG } from './utils/constants';
 
 function App() {
   const [role, setRole] = useState(null); // 'presenter' | 'controller' | 'participant'
+  const [wantsController, setWantsController] = useState(false);
 
   useEffect(() => {
     const initRole = async () => {
@@ -24,7 +25,8 @@ function App() {
 
       if (isControllerParam === 'true') {
         localStorage.setItem('role', 'controller');
-        setRole('controller');
+        setWantsController(true); // Signal that we want to be controller
+        setRole('participant'); // Start as participant, will upgrade if accepted
         window.history.replaceState({}, '', window.location.pathname);
         return;
       }
@@ -45,7 +47,8 @@ function App() {
         if (storedRole === 'presenter') {
           setRole('presenter');
         } else if (storedRole === 'controller') {
-          setRole('controller');
+          setWantsController(true); // Want to be controller
+          setRole('participant'); // Start as participant
         } else {
           setRole('participant');
         }
@@ -57,6 +60,16 @@ function App() {
     initRole();
   }, []);
 
+  const handleControllerAccepted = () => {
+    setRole('controller');
+  };
+
+  const handleControllerRejected = () => {
+    setRole('participant');
+    setWantsController(false);
+    localStorage.removeItem('role'); // Clear controller role
+  };
+
   if (!role) return <div>Loading...</div>;
 
   return (
@@ -64,7 +77,13 @@ function App() {
       {role === 'presenter' && <LandscapePrompt />}
       {role === 'presenter' && <Presenter />}
       {role === 'controller' && <Controller />}
-      {role === 'participant' && <Participant />}
+      {role === 'participant' && (
+        <Participant
+          wantsController={wantsController}
+          onControllerAccepted={handleControllerAccepted}
+          onControllerRejected={handleControllerRejected}
+        />
+      )}
     </>
   );
 }

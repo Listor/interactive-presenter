@@ -3,9 +3,32 @@ import Peer from 'peerjs';
 import { PRESENTER_PEER_ID, MSG, PEER_CONFIG } from '../utils/constants';
 import { SLIDES } from '../data/slides.jsx';
 
+// Generate or retrieve controller ID from cookie
+const getControllerID = () => {
+  const cookieName = 'controller_id';
+  const cookies = document.cookie.split(';');
+
+  for (let cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === cookieName) {
+      console.log(`🔄 Reusing existing controller ID from cookie`);
+      return value;
+    }
+  }
+
+  // Generate new ID and store in cookie (30 min expiry)
+  const newId = `controller-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const expires = new Date(Date.now() + 30 * 60 * 1000).toUTCString();
+  document.cookie = `${cookieName}=${newId}; expires=${expires}; path=/; SameSite=Strict`;
+
+  console.log(`🆕 Generated new controller ID: ${newId}`);
+  return newId;
+};
+
 const Controller = () => {
   const [status, setStatus] = useState('Connecting to Presenter...');
   const [connected, setConnected] = useState(false);
+  const [controllerId] = useState(getControllerID());
 
   // Synced State
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -19,7 +42,9 @@ const Controller = () => {
   const connRef = useRef(null);
 
   useEffect(() => {
-    const peer = new Peer(undefined, PEER_CONFIG);
+    console.log(`🎮 Connecting with controller ID: ${controllerId}`);
+
+    const peer = new Peer(controllerId, PEER_CONFIG);
 
     peer.on('open', () => {
       const conn = peer.connect(PRESENTER_PEER_ID, {
@@ -28,7 +53,7 @@ const Controller = () => {
       connRef.current = conn;
 
       conn.on('open', () => {
-        setStatus('Connected to Presenter');
+        setStatus('Connected to Presenter ✓');
         setConnected(true);
       });
 
@@ -42,12 +67,33 @@ const Controller = () => {
         }
       });
 
-      conn.on('close', () => setConnected(false));
-      conn.on('error', () => setConnected(false));
+      conn.on('close', () => {
+        setConnected(false);
+        setStatus('Disconnected from Presenter');
+      });
+
+      conn.on('error', () => {
+        setConnected(false);
+        setStatus('Connection Error');
+      });
+    });
+
+    peer.on('error', (err) => {
+      console.error('Peer error:', err);
+      if (err.type === 'unavailable-id') {
+        setStatus('❌ Another controller is active');
+        setConnected(false);
+        alert(
+          'Another controller is already connected. Your session may have expired or someone else is controlling the presentation.'
+        );
+      } else {
+        setStatus(`Connection Error: ${err.type}`);
+        setConnected(false);
+      }
     });
 
     return () => peer.destroy();
-  }, []);
+  }, [controllerId]);
 
   const send = (type, payload = {}) => {
     if (connRef.current) {

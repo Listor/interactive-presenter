@@ -30,6 +30,8 @@ const Presenter = () => {
   // Connections
   const connections = useRef([]);
   const pollVotes = useRef(new Map()); // userId -> optionIndex
+  const activeControllerIdRef = useRef(null); // Ref to avoid stale closure in PeerJS handlers
+  const [activeControllerId, setActiveControllerId] = useState(null); // State for UI/Sync
 
   // Helpers to broadcast
   const broadcast = (data) => {
@@ -140,6 +142,7 @@ const Presenter = () => {
     completedPollIds: Array.from(stateRef.current.completedPollIds),
     connectionCount: stateRef.current.connectionCount,
     voteCount: stateRef.current.currentVoteCount,
+    activeControllerId: activeControllerIdRef.current, // Use ref here
   });
 
   const broadcastSync = () => {
@@ -151,6 +154,55 @@ const Presenter = () => {
 
   const handleData = (data, conn) => {
     const { type, payload } = data;
+
+    // Handle controller registration request
+    if (type === MSG.REQUEST_CONTROLLER) {
+      const requesterId = conn.peer;
+      const currentActive = activeControllerIdRef.current;
+
+      if (!currentActive) {
+        // No controller yet, accept this one
+        activeControllerIdRef.current = requesterId;
+        setActiveControllerId(requesterId);
+        conn.send({ type: MSG.CONTROLLER_ACCEPTED, payload: requesterId });
+        console.log(`✅ Controller accepted: ${requesterId}`);
+      } else if (currentActive === requesterId) {
+        // This is the current controller reconnecting
+        conn.send({ type: MSG.CONTROLLER_ACCEPTED, payload: requesterId });
+        console.log(`🔄 Controller reconnected: ${requesterId}`);
+      } else {
+        // Already have a different controller
+        conn.send({
+          type: MSG.CONTROLLER_REJECTED,
+          payload: currentActive,
+        });
+        console.log(
+          `🚫 Controller rejected: ${requesterId} (active: ${currentActive})`
+        );
+      }
+      return;
+    }
+
+    // Only accept commands from the active controller
+    const isControllerCommand = [
+      MSG.CMD_GOTO_SLIDE,
+      MSG.CMD_START_POLL,
+      MSG.CMD_STOP_POLL,
+      MSG.CMD_REVEAL_ANSWER,
+      MSG.CMD_SHOW_OVERALL,
+      MSG.CMD_HIDE_OVERLAY,
+      MSG.CMD_RESET_PRESENTATION,
+    ].includes(type);
+
+    if (
+      isControllerCommand &&
+      conn.peer.trim() !== activeControllerIdRef.current?.trim()
+    ) {
+      console.log(
+        `🚫 Blocked command from non-controller: "${conn.peer}" (Active is: "${activeControllerIdRef.current}")`
+      );
+      return;
+    }
 
     switch (type) {
       case MSG.CMD_GOTO_SLIDE:
@@ -202,10 +254,23 @@ const Presenter = () => {
   };
 
   const resetPresentation = () => {
+    // Reset all states
     setCompletedPollIds(new Set());
     setOverallStats({ totalCorrect: 0, totalVotes: 0 });
-    resetPollState();
+
+    // resetPollState usually broadcasts EVENT_POLL_CLOSED
+    // We'll manually handle the sequence to avoid flood
+    setOverlay(null);
+    setPollPhase('idle');
+    pollVotes.current.clear();
+    setCurrentVoteCount(0);
     setCurrentSlide(0);
+
+    // Broadcast the main reset event
+    broadcast({ type: MSG.EVENT_RESET_SESSION });
+
+    // Also broadcast SYNC_STATE to controllers
+    broadcastSync();
   };
 
   const startPoll = () => {

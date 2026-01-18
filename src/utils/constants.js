@@ -14,6 +14,10 @@ export const PEER_CONFIG = {
 
 // Protocol
 export const MSG = {
+  REQUEST_CONTROLLER: 'REQUEST_CONTROLLER', // Request to become controller
+  CONTROLLER_ACCEPTED: 'CONTROLLER_ACCEPTED', // Presenter accepts controller
+  CONTROLLER_REJECTED: 'CONTROLLER_REJECTED', // Presenter rejects (already have one)
+
   CMD_GOTO_SLIDE: 'CMD_GOTO_SLIDE',
   CMD_START_POLL: 'CMD_START_POLL',
   CMD_STOP_POLL: 'CMD_STOP_POLL', // -> Distribution Phase
@@ -26,6 +30,7 @@ export const MSG = {
   EVENT_POLL_CLOSED: 'EVENT_POLL_CLOSED',
   EVENT_POLL_REVEALED: 'EVENT_POLL_REVEALED', // Includes correct index
   EVENT_VOTE: 'EVENT_VOTE',
+  EVENT_RESET_SESSION: 'EVENT_RESET_SESSION', // Signal participants to reset scores
 
   SYNC_STATE: 'SYNC_STATE',
 };

@@ -2,7 +2,33 @@ import React, { useEffect, useState, useRef } from 'react';
 import Peer from 'peerjs';
 import { PRESENTER_PEER_ID, MSG, PEER_CONFIG } from '../utils/constants';
 
-const Participant = () => {
+// Generate or retrieve controller ID from cookie (same as Controller.jsx)
+const getControllerID = () => {
+  const cookieName = 'controller_id';
+  const cookies = document.cookie.split(';');
+
+  for (let cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === cookieName) {
+      console.log(`🔄 Reusing existing controller ID from cookie`);
+      return value;
+    }
+  }
+
+  // Generate new ID and store in cookie (30 min expiry)
+  const newId = `controller-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const expires = new Date(Date.now() + 30 * 60 * 1000).toUTCString();
+  document.cookie = `${cookieName}=${newId}; expires=${expires}; path=/; SameSite=Strict`;
+
+  console.log(`🆕 Generated new controller ID: ${newId}`);
+  return newId;
+};
+
+const Participant = ({
+  wantsController,
+  onControllerAccepted,
+  onControllerRejected,
+}) => {
   const [status, setStatus] = useState('Connecting...');
   const [connected, setConnected] = useState(false);
 
@@ -19,19 +45,46 @@ const Participant = () => {
   const connRef = useRef(null);
 
   useEffect(() => {
-    const peer = new Peer(undefined, PEER_CONFIG);
+    // Use controller ID if we want to be controller, otherwise let PeerJS generate random ID
+    const peerId = wantsController ? getControllerID() : undefined;
 
-    peer.on('open', () => {
+    const peer = new Peer(peerId, PEER_CONFIG);
+
+    peer.on('open', (myPeerId) => {
       const conn = peer.connect(PRESENTER_PEER_ID);
       connRef.current = conn;
 
       conn.on('open', () => {
         setStatus('Connected live!');
         setConnected(true);
+
+        // If we want to be controller, request it
+        if (wantsController) {
+          console.log(`🎮 Requesting controller role with ID: ${myPeerId}`);
+          conn.send({ type: MSG.REQUEST_CONTROLLER, payload: myPeerId });
+        }
       });
 
       conn.on('data', (data) => {
         const { type, payload } = data;
+
+        console.log('data', data);
+
+        // Handle controller registration responses
+        if (type === MSG.CONTROLLER_ACCEPTED) {
+          console.log(`✅ Controller request accepted!`);
+          if (onControllerAccepted) onControllerAccepted();
+          return;
+        } else if (type === MSG.CONTROLLER_REJECTED) {
+          console.log(
+            `🚫 Controller request rejected. Active controller: ${payload}`
+          );
+          alert(
+            `Another controller is already active. You'll stay as a participant.`
+          );
+          if (onControllerRejected) onControllerRejected();
+          return;
+        }
 
         if (type === MSG.EVENT_POLL_ACTIVE) {
           setActivePoll(payload); // payload is poll object
@@ -44,6 +97,11 @@ const Participant = () => {
         } else if (type === MSG.EVENT_POLL_REVEALED) {
           // Payload: { correctIndex }
           handleReveal(payload.correctIndex);
+        } else if (type === MSG.EVENT_RESET_SESSION) {
+          setStats({ correct: 0, total: 0 });
+          setMyVote(null);
+          setFeedback(null);
+          setActivePoll(null);
         }
       });
 
@@ -52,7 +110,7 @@ const Participant = () => {
     });
 
     return () => peer.destroy();
-  }, []);
+  }, [wantsController, onControllerAccepted, onControllerRejected]);
 
   // Needed to access myVote inside the event handler closure securely?
   // Using a ref to track vote for the current poll cycle
@@ -239,14 +297,20 @@ const Participant = () => {
 };
 
 const containerStyle = {
-  height: '100dvh', // Use dvh for mobile browsers
+  height: '100dvh',
+  width: '100vw',
+  maxWidth: '100vw',
+  maxHeight: '100dvh',
   background: '#121212',
   color: 'white',
   padding: '10px',
   display: 'flex',
   flexDirection: 'column',
   fontFamily: 'sans-serif',
-  overflow: 'hidden', // Prevent scroll
+  overflow: 'hidden',
+  position: 'fixed',
+  top: 0,
+  left: 0,
 };
 
 const reactionBtn = {
