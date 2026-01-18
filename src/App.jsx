@@ -38,7 +38,6 @@ function App() {
             mode: 'no-cors', // We just care if it connects, not the response
           }
         );
-        console.log('PeerServer is reachable.');
 
         // 3. Normal Role Logic (from storage or default to participant)
         const storedRole = localStorage.getItem('role');
@@ -51,10 +50,6 @@ function App() {
           setRole('participant');
         }
       } catch (err) {
-        console.log(
-          'PeerServer unreachable, defaulting to Presenter mode.',
-          err
-        );
         setRole('presenter');
       }
     };

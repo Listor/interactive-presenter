@@ -5,7 +5,6 @@ const GlitchWord = ({ original = 'echt', glitch = 'fake' }) => {
 
   useEffect(() => {
     let isActive = true;
-    console.log('GlitchWord mounted: starting loop');
 
     const loop = () => {
       if (!isActive) return;
@@ -19,8 +18,7 @@ const GlitchWord = ({ original = 'echt', glitch = 'fake' }) => {
 
     const triggerGlitch = async () => {
       // Glitch Sequence: FAKE (short) -> ECHT -> FAKE (LONG) -> ECHT
-      
-      console.log('GlitchWord: Entry Flicker Start');
+
       // Short flicker entry
       setShowGlitch(true);
       await wait(50 + Math.random() * 50);
@@ -30,17 +28,15 @@ const GlitchWord = ({ original = 'echt', glitch = 'fake' }) => {
       await wait(50 + Math.random() * 50);
 
       // MAIN VISIBILITY: Hold "FAKE" for 1.5 - 2.5 seconds
-      console.log('GlitchWord: Main Glitch Hold NEW (1.5s+)');
       if (!isActive) return;
       setShowGlitch(true);
-      
+
       // Increased duration significantly
-      await wait(1800 + Math.random() * 1000); 
+      await wait(1800 + Math.random() * 1000);
 
       if (!isActive) return;
       setShowGlitch(false);
-      console.log('GlitchWord: Glitch End');
-      
+
       // Accessing loop via simple recursion of logic
       loop();
     };
