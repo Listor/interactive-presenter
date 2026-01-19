@@ -136,10 +136,11 @@ h6 {
   margin: 0 auto;
 }
 
-/* Floating Images Styles */
-.floating-images {
+/* Floating Content Styles */
+.floating-content {
   max-width: 90%;
   max-height: 85vh;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
@@ -148,8 +149,14 @@ h6 {
   gap: 24px;
 }
 
-.floating-images img {
+.floating-content img,
+.floating-content .content-slot {
   flex: 1;
   min-width: 0;
-  object-fit: contain;
+}
+
+.content-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

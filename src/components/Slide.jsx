@@ -97,8 +97,10 @@ const Slide = ({ data, isActive }) => {
         </div>
       )}
 
-      {/* Floating Headline - Inside Box */}
-      {(data.headline || (data.images && data.images.length > 0)) && (
+      {/* Floating Headline and Content */}
+      {(data.headline ||
+        (data.images && data.images.length > 0) ||
+        (data.content && data.content.length > 0)) && (
         <div className="slide-content-wrapper">
           {data.headline && (
             <div className="floating-box box-medium floating-headline">
@@ -106,9 +108,40 @@ const Slide = ({ data, isActive }) => {
             </div>
           )}
 
-          {/* Floating Images - Inside Box, Centered */}
-          {data.images && data.images.length > 0 && (
-            <div className="floating-box box-large floating-images">
+          {/* Floating Content - Mixed images and custom slots */}
+          {data.content && data.content.length > 0 && (
+            <div className="floating-box box-large floating-content">
+              {data.content.map((item, index) => {
+                // If item is a string, render as image
+                if (typeof item === 'string') {
+                  return (
+                    <img
+                      key={index}
+                      src={item}
+                      alt={`Slide content ${index + 1}`}
+                      style={{
+                        maxWidth: '100%',
+                        maxHeight: '60vh',
+                        width: 'auto',
+                        height: 'auto',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  );
+                }
+                // Otherwise, render as custom JSX slot
+                return (
+                  <div key={index} className="content-slot">
+                    {item}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Legacy support for images array */}
+          {!data.content && data.images && data.images.length > 0 && (
+            <div className="floating-box box-large floating-content">
               {data.images.map((imageSrc, index) => (
                 <img
                   key={index}
