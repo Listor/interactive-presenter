@@ -288,18 +288,6 @@ const Controller = () => {
         <h3>
           Slide {currentSlideIndex + 1} / {SLIDES.length}
         </h3>
-        {hasPoll && (
-          <span
-            style={{
-              padding: '5px 10px',
-              background: 'gold',
-              color: 'black',
-              borderRadius: '4px',
-            }}
-          >
-            POLL AVAILABLE
-          </span>
-        )}
       </div>
 
       {hasPoll && (

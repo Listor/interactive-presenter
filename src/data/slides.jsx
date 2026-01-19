@@ -47,6 +47,7 @@ export const SLIDES = [
     id: 'slide-code-001',
     type: 'image',
     url: 'background.png',
+    shim: true,
     poll: {
       question: 'What is the best programming language?',
       options: [
@@ -79,6 +80,99 @@ export const SLIDES = [
     type: 'image',
     url: 'background.png',
     poll: null,
+    shim: true,
+  },
+  {
+    id: 'slide-what-to-do-001',
+    type: 'image',
+    url: 'background.png',
+    title: <>Was kann ich überhaupt noch machen?</>,
+    poll: null,
+    shim: true,
+  },
+  {
+    id: 'slide-what-to-do-002',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Hinterfrage die Inhalte',
+    poll: null,
+    shim: true,
+    content: [
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          - Wer ist die Quelle ?<br />
+          - Wann ist es passiert?
+          <br />- Was genau ist passiert?
+        </p>
+      </div>,
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          - Wer hat was getan?
+          <br />- Warum ist es passiert?
+          <br />- Wo ist es passiert?
+        </p>
+      </div>,
+    ],
+  },
+  {
+    id: 'slide-what-to-do-003',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Rückwärts Bildersuche',
+    poll: null,
+    shim: true,
+    content: ['slides/reverse-image.png'],
+  },
+  {
+    id: 'slide-what-to-do-004',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Wasserzeichen',
+    poll: null,
+    shim: true,
+    content: [
+      'slides/watermark-1.png',
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          Googles SynthID verwendet Wasserzeichen um die Quelle von Bildern zu
+          identifizieren.
+          <br />
+          <br />
+          Es funktioniert für alle Bilder, Videos und Texte, die von Google
+          generiert werden.
+        </p>
+      </div>,
+    ],
+  },
+  {
+    id: 'slide-what-to-do-004',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Wasserzeichen',
+    poll: null,
+    shim: true,
+    content: [
+      'slides/watermark-2.png',
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          Content Credentials machen die Herkunft digitaler Inhalte
+          nachvollziehbar.
+          <br />
+          <br />
+          Sie basieren auf einem offenen Standard, der von Unternehmen und
+          Organisationen wie Adobe, Microsoft, OpenAI, Meta und Amazon getragen
+          werden.
+        </p>
+      </div>,
+    ],
+  },
+  {
+    id: 'slide-what-others-do-001',
+    type: 'image',
+    url: 'background.png',
+    title: <>Wird an professionellen Lösungen gearbeitet?</>,
+    poll: null,
+    shim: true,
   },
   {
     id: 'slide-isitfake-001',
