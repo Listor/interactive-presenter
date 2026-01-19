@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import NetworkNode from './NetworkNode';
 
-const Slide = ({ data, isActive }) => {
+const Slide = ({ data, isActive, pollResults, pollPhase }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -136,11 +136,79 @@ const Slide = ({ data, isActive }) => {
 
               {!data.content &&
                 data.poll &&
-                data.poll.options.map((opt, index) => (
-                  <div key={index} className="content-slot">
-                    {opt.content}
-                  </div>
-                ))}
+                data.poll.options.map((opt, index) => {
+                  let overlayShim = null;
+
+                  if (
+                    (pollPhase === 'distribution' ||
+                      pollPhase === 'revealed') &&
+                    pollResults
+                  ) {
+                    const count =
+                      pollResults.counts &&
+                      pollResults.counts[index] !== undefined
+                        ? pollResults.counts[index]
+                        : 0;
+                    const total = pollResults.total > 0 ? pollResults.total : 1;
+                    const pct = Math.round((count / total) * 100);
+
+                    const isCorrect =
+                      pollPhase === 'revealed' &&
+                      pollResults.correctIndex === index;
+
+                    overlayShim = (
+                      <div
+                        className="poll-overlay"
+                        style={{
+                          border: isCorrect ? '4px solid #4caf50' : 'none',
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontSize: '1.5rem',
+                            fontWeight: 'bold',
+                            marginBottom: '10px',
+                            textTransform: 'uppercase',
+                          }}
+                        >
+                          {opt.label}
+                        </div>
+                        <div style={{ fontSize: '3rem', fontWeight: 'bold' }}>
+                          {pct}%
+                        </div>
+                        <div style={{ fontSize: '1.2rem', opacity: 0.8 }}>
+                          {count} Votes
+                        </div>
+                        {isCorrect && (
+                          <div
+                            style={{
+                              color: '#4caf50',
+                              fontSize: '1.5rem',
+                              marginTop: '10px',
+                              fontWeight: 'bold',
+                              background: 'rgba(0,0,0,0.5)',
+                              padding: '5px 10px',
+                              borderRadius: '5px',
+                            }}
+                          >
+                            ✅ Richtig
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={index}
+                      className="content-slot"
+                      style={{ position: 'relative' }}
+                    >
+                      {opt.content}
+                      {overlayShim}
+                    </div>
+                  );
+                })}
             </div>
           )}
 

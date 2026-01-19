@@ -405,96 +405,6 @@ const Presenter = () => {
       zIndex: 200,
     };
 
-    if (overlay === 'results' && pollResults) {
-      const isRevealed = pollPhase === 'revealed';
-
-      return (
-        <div style={style}>
-          <div
-            className="floating-box box-large"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              width: 'fit-content',
-              maxWidth: '90%',
-            }}
-          >
-            <h2>
-              {isRevealed ? 'Poll Results (Verified)' : 'Quick Poll Results'}
-            </h2>
-            <h3 style={{ marginBottom: '2rem' }}>{pollResults.question}</h3>
-            <div style={{ width: '100%', minWidth: '400px' }}>
-              {pollResults.options.map((opt, i) => {
-                const count = pollResults.counts[i];
-                const pct =
-                  pollResults.total > 0 ? (count / pollResults.total) * 100 : 0;
-                const isCorrect = i === pollResults.correctIndex;
-
-                // Highlight logic
-                let barColor = '#4caf50'; // Green default for results? Or stick to logic.
-                if (isRevealed) {
-                  if (isCorrect) barColor = '#4caf50';
-                  else barColor = '#555';
-                } else {
-                  barColor = '#9e9e9e';
-                }
-
-                // Override bar logic slightly effectively
-                // But let's stick to original logic but ensure variables are available if I paste content.
-                // Actually I need to copy the map logic exactly or just wrap the outer part.
-                // The ReplacementContent replaces the block.
-                // I should copy the map content.
-
-                // Wait, I can just wrap the outer div.
-
-                return (
-                  <div key={i} style={{ marginBottom: '1rem' }}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        marginBottom: '5px',
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontWeight:
-                            isRevealed && isCorrect ? 'bold' : 'normal',
-                        }}
-                      >
-                        {opt.label} {isRevealed && isCorrect && '✅'}
-                      </span>
-                      <span>
-                        {count} ({Math.round(pct)}%)
-                      </span>
-                    </div>
-                    <div
-                      style={{
-                        background: '#333',
-                        height: '20px',
-                        borderRadius: '10px',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: `${pct}%`,
-                          background: barColor,
-                          height: '100%',
-                          transition: 'all 0.5s ease',
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
     if (overlay === 'overall') {
       const pct =
         overallStats.totalVotes > 0
@@ -575,7 +485,12 @@ const Presenter = () => {
         ID: {peerId}
       </div>
 
-      <Slide data={SLIDES[currentSlide]} isActive={true} />
+      <Slide
+        data={SLIDES[currentSlide]}
+        isActive={true}
+        pollResults={pollResults}
+        pollPhase={pollPhase}
+      />
 
       <div
         style={{

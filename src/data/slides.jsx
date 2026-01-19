@@ -71,7 +71,7 @@ export const SLIDES = [
           ),
         },
       ],
-      correctIndex: 2,
+      correctIndex: 0,
     },
   },
   {
