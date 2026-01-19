@@ -93,6 +93,8 @@ h6 {
   border-radius: 15px !important;
   color: white;
   box-sizing: border-box;
+  position: relative;
+  z-index: 10;
 }
 
 .box-small {
@@ -105,4 +107,49 @@ h6 {
 
 .box-large {
   padding: 48px !important;
+}
+
+/* Slide Content Wrapper - Centers headline and images vertically */
+.slide-content-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.slide-content-wrapper > * {
+  pointer-events: auto;
+}
+
+/* Floating Headline Styles */
+.floating-headline {
+  width: fit-content;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+/* Floating Images Styles */
+.floating-images {
+  max-width: 90%;
+  max-height: 85vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 24px;
+}
+
+.floating-images img {
+  flex: 1;
+  min-width: 0;
+  object-fit: contain;
 }

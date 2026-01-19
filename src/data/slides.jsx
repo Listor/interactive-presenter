@@ -18,8 +18,9 @@ export const SLIDES = [
     type: 'image',
     url: 'background.png',
     poll: null,
-    headline: 'Willkommen',
+    headline: 'Scan den Code um mit abzustimmen.',
     shim: true,
+    images: ['qrcode.svg'],
   },
   {
     id: 'slide-code-001',

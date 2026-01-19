@@ -98,19 +98,33 @@ const Slide = ({ data, isActive }) => {
       )}
 
       {/* Floating Headline - Inside Box */}
-      {data.headline && (
-        <div
-          className="floating-box box-medium"
-          style={{
-            position: 'absolute',
-            top: '10%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 10,
-            maxWidth: '80%',
-          }}
-        >
-          <h2 style={{ margin: 0, fontSize: '2rem' }}>{data.headline}</h2>
+      {(data.headline || (data.images && data.images.length > 0)) && (
+        <div className="slide-content-wrapper">
+          {data.headline && (
+            <div className="floating-box box-medium floating-headline">
+              <h2 style={{ margin: 0, fontSize: '2rem' }}>{data.headline}</h2>
+            </div>
+          )}
+
+          {/* Floating Images - Inside Box, Centered */}
+          {data.images && data.images.length > 0 && (
+            <div className="floating-box box-large floating-images">
+              {data.images.map((imageSrc, index) => (
+                <img
+                  key={index}
+                  src={imageSrc}
+                  alt={`Slide content ${index + 1}`}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '60vh',
+                    width: 'auto',
+                    height: 'auto',
+                    objectFit: 'contain',
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </>
