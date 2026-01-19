@@ -44,66 +44,284 @@ export const SLIDES = [
     content: ['qrcode.svg', 'icons/arrow.svg', 'icons/phone.svg'],
   },
   {
+    id: 'slide-start-001',
+    type: 'image',
+    url: 'background.png',
+    title: <>Erkennt ihr was KI generiert ist?</>,
+    poll: null,
+    shim: true,
+  },
+  {
+    id: 'slide-code-000',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
+          content: <img src="slides/word-defacts.png" className="slide__img" />,
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 0,
+    },
+  },
+  {
     id: 'slide-code-001',
     type: 'image',
     url: 'background.png',
     shim: true,
+    headline: 'KI Generiert?',
     poll: {
-      question: 'What is the best programming language?',
+      question: 'KI generiert?',
       options: [
         {
-          label: 'Links',
+          label: 'Ja',
+          content: <img src="slides/real-1.jpg" className="slide__img" />,
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 1,
+    },
+  },
+  {
+    id: 'slide-code-002',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
+          content: <img src="slides/fake-1.png" className="slide__img" />,
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 1,
+    },
+  },
+  {
+    id: 'slide-code-003',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
           content: (
-            <img
-              src="slides/isitfake-1.png"
-              alt="isitfake-1"
-              className="slide__img"
-            />
+            <img src="slides/word-defacts-2.png" className="slide__img" />
           ),
         },
         {
-          label: 'Rechts',
-          content: (
-            <img
-              src="slides/isitfake-2.png"
-              alt="isitfake-2"
-              className="slide__img"
-            />
-          ),
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
         },
       ],
       correctIndex: 0,
     },
   },
   {
-    id: 'slide-ai-001',
+    id: 'slide-code-004',
     type: 'image',
     url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
     poll: {
-      question: 'Is this image AI generated?',
+      question: 'KI generiert?',
       options: [
         {
-          label: 'Yes',
-          content: (
-            <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>Yes</div>
-          ),
+          label: 'Ja',
+          content: <img src="slides/real-2.webp" className="slide__img" />,
         },
         {
-          label: 'No',
-          content: (
-            <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>No</div>
-          ),
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 1,
+    },
+  },
+  {
+    id: 'slide-code-005',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
+          content: <img src="slides/fake-3.png" className="slide__img" />,
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
         },
       ],
       correctIndex: 0,
     },
   },
   {
-    id: 'slide-beach-001',
+    id: 'slide-videos-001',
     type: 'image',
     url: 'background.png',
+    title: <>Was ist mit Videos?</>,
     poll: null,
     shim: true,
+  },
+  {
+    id: 'slide-videos-002',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
+          content: (
+            <video
+              src="videos/video-shark.mp4"
+              className="slide__img"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ),
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 1,
+    },
+  },
+  {
+    id: 'slide-videos-003',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
+          content: (
+            <video
+              src="videos/video-zebras.mp4"
+              className="slide__img"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ),
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 1,
+    },
+  },
+  {
+    id: 'slide-videos-003',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
+          content: (
+            <video
+              src="videos/fake-account.mp4"
+              className="slide__img"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ),
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 0,
+    },
+  },
+  {
+    id: 'slide-videos-004',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'Fake Profil',
+    poll: null,
+    content: [
+      'slides/fake-tiktok-profile.png',
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          Millionen Views mit einem Profil von einem Fake Menschen mit einem
+          Fake toten Hund.
+        </p>
+      </div>,
+    ],
+  },
+  {
+    id: 'slide-videos-005',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'AI Influencer',
+    poll: null,
+    content: ['slides/ai-influencer.png'],
+  },
+  // TODO forensic part
+  // TODO position for finger
+  // TODO recall and figure out if more content is needed
+  {
+    id: 'slide-quiz-099',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Extra Finger',
+    poll: null,
+    shim: true,
+    content: [
+      'slides/extra-finger.png',
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          Kriminelle nutzen zusätzliche Finger als Prothesen, damit ihre Taten
+          auf Videos wie KI-Fehler wirken.
+        </p>
+      </div>,
+    ],
   },
   {
     id: 'slide-what-to-do-001',
@@ -207,6 +425,42 @@ export const SLIDES = [
     ],
   },
   {
+    id: 'slide-what-to-do-007',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Fehler im Text',
+    poll: null,
+    shim: true,
+    content: [
+      'slides/word-defacts-3.png',
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          Auch moderene Systeme machen noch immer Fehler im Text, die man nicht
+          auf den ersten, aber auf den zweiten Blick sieht.
+        </p>
+      </div>,
+    ],
+  },
+  {
+    id: 'slide-what-to-do-007',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Schlechte Tools',
+    poll: null,
+    shim: true,
+    content: [
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          Nicht jeder wird immer die besten Tools verwenden, weshalb wir auch
+          weiterhin sehr professionelle und sehr schlechte Inhalte sehen werden.
+          <br />
+          <br />
+          Deshalb sollte man generell immer auf die Texte und Hände achten.
+        </p>
+      </div>,
+    ],
+  },
+  {
     id: 'slide-what-others-do-001',
     type: 'image',
     url: 'background.png',
@@ -284,6 +538,15 @@ export const SLIDES = [
     poll: null,
     shim: true,
     content: ['cards/xmas-1.png', 'cards/xmas-2.png'],
+  },
+  {
+    id: 'slide-is-everything-bad-004',
+    type: 'image',
+    url: 'background.png',
+    headline: 'KI Fails',
+    poll: null,
+    shim: true,
+    content: ['slides/ai-fail-1.png', 'slides/ai-fail-2.png'],
   },
   {
     id: 'slide-end-001',

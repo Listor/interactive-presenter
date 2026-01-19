@@ -65,7 +65,20 @@ const Presenter = () => {
     currentVoteCount,
   ]);
 
-  // Auto-start poll when entering a slide with a poll
+  // Keyboard Navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight') {
+        gotoSlide(stateRef.current.currentSlide + 1);
+      } else if (e.key === 'ArrowLeft') {
+        gotoSlide(stateRef.current.currentSlide - 1);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   useEffect(() => {
     const slide = SLIDES[currentSlide];
     if (
