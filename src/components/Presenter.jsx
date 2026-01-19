@@ -65,6 +65,19 @@ const Presenter = () => {
     currentVoteCount,
   ]);
 
+  // Auto-start poll when entering a slide with a poll
+  useEffect(() => {
+    const slide = SLIDES[currentSlide];
+    if (
+      slide &&
+      slide.poll &&
+      !completedPollIds.has(slide.id) &&
+      pollPhase === 'idle'
+    ) {
+      setTimeout(() => startPoll(), 500); // Small delay for smooth transition
+    }
+  }, [currentSlide, pollPhase]);
+
   useEffect(() => {
     let peer;
     let retryTimeout;
@@ -279,7 +292,13 @@ const Presenter = () => {
     setOverlay(null);
     setPollPhase('voting');
 
-    broadcast({ type: MSG.EVENT_POLL_ACTIVE, payload: slide.poll });
+    broadcast({
+      type: MSG.EVENT_POLL_ACTIVE,
+      payload: {
+        ...slide.poll,
+        options: slide.poll.options.map((o) => o.label),
+      },
+    });
   };
 
   const stopPoll = () => {
@@ -444,7 +463,7 @@ const Presenter = () => {
                             isRevealed && isCorrect ? 'bold' : 'normal',
                         }}
                       >
-                        {opt} {isRevealed && isCorrect && '✅'}
+                        {opt.label} {isRevealed && isCorrect && '✅'}
                       </span>
                       <span>
                         {count} ({Math.round(pct)}%)

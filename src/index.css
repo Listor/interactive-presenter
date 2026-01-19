@@ -160,3 +160,11 @@ h6 {
   align-items: center;
   justify-content: center;
 }
+
+.slide__img {
+  max-width: 100%;
+  max-height: 60vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}

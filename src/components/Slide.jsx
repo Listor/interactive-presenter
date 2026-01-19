@@ -100,7 +100,8 @@ const Slide = ({ data, isActive }) => {
       {/* Floating Headline and Content */}
       {(data.headline ||
         (data.images && data.images.length > 0) ||
-        (data.content && data.content.length > 0)) && (
+        (data.content && data.content.length > 0) ||
+        (data.poll && data.poll.options)) && (
         <div className="slide-content-wrapper">
           {data.headline && (
             <div className="floating-box box-medium floating-headline">
@@ -109,55 +110,56 @@ const Slide = ({ data, isActive }) => {
           )}
 
           {/* Floating Content - Mixed images and custom slots */}
-          {data.content && data.content.length > 0 && (
+          {((data.content && data.content.length > 0) ||
+            (data.poll && data.poll.options)) && (
             <div className="floating-box box-large floating-content">
-              {data.content.map((item, index) => {
-                // If item is a string, render as image
-                if (typeof item === 'string') {
+              {data.content &&
+                data.content.map((item, index) => {
+                  // If item is a string, render as image
+                  if (typeof item === 'string') {
+                    return (
+                      <img
+                        key={index}
+                        src={item}
+                        alt={`Slide content ${index + 1}`}
+                        className="slide__img"
+                      />
+                    );
+                  }
+                  // Otherwise, render as custom JSX slot
                   return (
-                    <img
-                      key={index}
-                      src={item}
-                      alt={`Slide content ${index + 1}`}
-                      style={{
-                        maxWidth: '100%',
-                        maxHeight: '60vh',
-                        width: 'auto',
-                        height: 'auto',
-                        objectFit: 'contain',
-                      }}
-                    />
+                    <div key={index} className="content-slot">
+                      {item}
+                    </div>
                   );
-                }
-                // Otherwise, render as custom JSX slot
-                return (
+                })}
+
+              {!data.content &&
+                data.poll &&
+                data.poll.options.map((opt, index) => (
                   <div key={index} className="content-slot">
-                    {item}
+                    {opt.content}
                   </div>
-                );
-              })}
+                ))}
             </div>
           )}
 
           {/* Legacy support for images array */}
-          {!data.content && data.images && data.images.length > 0 && (
-            <div className="floating-box box-large floating-content">
-              {data.images.map((imageSrc, index) => (
-                <img
-                  key={index}
-                  src={imageSrc}
-                  alt={`Slide content ${index + 1}`}
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '60vh',
-                    width: 'auto',
-                    height: 'auto',
-                    objectFit: 'contain',
-                  }}
-                />
-              ))}
-            </div>
-          )}
+          {!data.content &&
+            !data.poll &&
+            data.images &&
+            data.images.length > 0 && (
+              <div className="floating-box box-large floating-content">
+                {data.images.map((imageSrc, index) => (
+                  <img
+                    key={index}
+                    src={imageSrc}
+                    alt={`Slide content ${index + 1}`}
+                    className="slide__img"
+                  />
+                ))}
+              </div>
+            )}
         </div>
       )}
     </>

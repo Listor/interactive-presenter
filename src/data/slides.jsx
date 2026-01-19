@@ -22,10 +22,14 @@ export const SLIDES = [
     shim: true,
     content: [
       'me.png',
-      <div style={{ textAlign: 'left', fontSize: '2.5rem', fontWeight: 300 }}>
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
         <p>
-          „Lazyness ist meine Superkraft. Deshalb baue ich Software die mich
-          überflüssig macht.“
+          „Ich baue Software um das Leben einfacher und inklusiver zu machen.
+          <br />
+          <br />
+          Technologie kann unser Leben verbessern und menschliche Beziehungen
+          vertiefen – aber nur, wenn wir sie für Menschen entwickeln und nicht,
+          um sie auszubeuten.“
         </p>
       </div>,
     ],
@@ -35,18 +39,9 @@ export const SLIDES = [
     type: 'image',
     url: 'background.png',
     poll: null,
-    headline: 'Scan mich zum Mitmachen',
+    headline: 'Code scannen um mitzumachen',
     shim: true,
-    content: [
-      'qrcode.svg',
-      'icons/arrow.svg',
-      'icons/phone.svg',
-      // You can also mix in custom JSX content:
-      // <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>
-      //   <p>Custom text</p>
-      //   <video src="video.mp4" autoPlay loop muted style={{ maxHeight: '60vh' }} />
-      // </div>,
-    ],
+    content: ['qrcode.svg', 'icons/arrow.svg', 'icons/phone.svg'],
   },
   {
     id: 'slide-code-001',
@@ -54,7 +49,28 @@ export const SLIDES = [
     url: 'background.png',
     poll: {
       question: 'What is the best programming language?',
-      options: ['JavaScript', 'Python', 'Rust', 'Go'],
+      options: [
+        {
+          label: 'Links',
+          content: (
+            <img
+              src="slides/isitfake-1.png"
+              alt="isitfake-1"
+              className="slide__img"
+            />
+          ),
+        },
+        {
+          label: 'Rechts',
+          content: (
+            <img
+              src="slides/isitfake-2.png"
+              alt="isitfake-2"
+              className="slide__img"
+            />
+          ),
+        },
+      ],
       correctIndex: 2,
     },
   },
@@ -65,12 +81,64 @@ export const SLIDES = [
     poll: null,
   },
   {
+    id: 'slide-isitfake-001',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Automatischer Faktencheck',
+    poll: null,
+    shim: true,
+    content: ['slides/isitfake-1.png'],
+  },
+  {
+    id: 'slide-isitfake-002',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Automatischer Faktencheck',
+    poll: null,
+    shim: true,
+    content: ['slides/isitfake-2.png'],
+  },
+  {
+    id: 'slide-teenager-001',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Allgemeine KI Bilderkennung',
+    poll: null,
+    shim: true,
+    content: [
+      'slides/integrity-1.png',
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          Der 17 Jährige Huxley Westemeier entwickelt ein System namens
+          Integrity zur generellen Erkennung von KI generierten Bildern.
+          <br />
+          <br />
+          Er setzt nicht auf trainierte Modelle, sondern auf Algorithmen die
+          nach bestimmten Mustern suchen.
+        </p>
+      </div>,
+    ],
+  },
+  {
     id: 'slide-ai-001',
     type: 'image',
     url: 'background.png',
     poll: {
       question: 'Is this image AI generated?',
-      options: ['Yes', 'No'],
+      options: [
+        {
+          label: 'Yes',
+          content: (
+            <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>Yes</div>
+          ),
+        },
+        {
+          label: 'No',
+          content: (
+            <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>No</div>
+          ),
+        },
+      ],
       correctIndex: 0,
     },
   },
