@@ -33,6 +33,10 @@ const Controller = () => {
   const [pollPhase, setPollPhase] = useState('idle'); // 'idle', 'voting', 'distribution', 'revealed'
   const [completedPollIds, setCompletedPollIds] = useState([]); // Array of strings
 
+  // Timer State
+  const [startTime, setStartTime] = useState(null);
+  const [elapsedTime, setElapsedTime] = useState(0);
+
   // Live Stats
   const [connectionCount, setConnectionCount] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
@@ -90,6 +94,35 @@ const Controller = () => {
 
     return () => peer.destroy();
   }, [controllerId]);
+
+  // Timer Logic
+  useEffect(() => {
+    if (currentSlideIndex === 0) {
+      setStartTime(null);
+      setElapsedTime(0);
+    } else if (currentSlideIndex >= 1 && startTime === null) {
+      setStartTime(Date.now());
+    }
+  }, [currentSlideIndex, startTime]);
+
+  useEffect(() => {
+    let interval;
+    if (startTime) {
+      interval = setInterval(() => {
+        const seconds = Math.floor((Date.now() - startTime) / 1000);
+        setElapsedTime(seconds);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [startTime]);
+
+  const formatTime = (seconds) => {
+    const mm = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const ss = (seconds % 60).toString().padStart(2, '0');
+    return `${mm}:${ss}`;
+  };
 
   const send = (type, payload = {}) => {
     if (connRef.current) {
@@ -254,6 +287,20 @@ const Controller = () => {
           <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
             {connectionCount}
           </span>
+        </div>
+        <div
+          style={{
+            marginLeft: '15px',
+            padding: '4px 10px',
+            background: '#222',
+            borderRadius: '15px',
+            fontFamily: 'monospace',
+            fontSize: '1.1rem',
+            color: '#00e676',
+            border: '1px solid #444',
+          }}
+        >
+          {formatTime(elapsedTime)}
         </div>
       </div>
 

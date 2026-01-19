@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import NetworkNode from './NetworkNode';
+import Socials from './Socials';
 
-const Slide = ({ data, isActive, pollResults, pollPhase }) => {
+const Slide = ({ data, isActive, pollResults, pollPhase, isLast }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -94,6 +95,7 @@ const Slide = ({ data, isActive, pollResults, pollPhase }) => {
           >
             {data.title}
           </h1>
+          {isLast && <Socials />}
         </div>
       )}
 

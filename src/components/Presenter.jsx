@@ -490,6 +490,7 @@ const Presenter = () => {
         isActive={true}
         pollResults={pollResults}
         pollPhase={pollPhase}
+        isLast={currentSlide === SLIDES.length - 1}
       />
 
       <div

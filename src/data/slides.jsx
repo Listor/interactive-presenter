@@ -76,6 +76,29 @@ export const SLIDES = [
     },
   },
   {
+    id: 'slide-ai-001',
+    type: 'image',
+    url: 'background.png',
+    poll: {
+      question: 'Is this image AI generated?',
+      options: [
+        {
+          label: 'Yes',
+          content: (
+            <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>Yes</div>
+          ),
+        },
+        {
+          label: 'No',
+          content: (
+            <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>No</div>
+          ),
+        },
+      ],
+      correctIndex: 0,
+    },
+  },
+  {
     id: 'slide-beach-001',
     type: 'image',
     url: 'background.png',
@@ -92,6 +115,23 @@ export const SLIDES = [
   },
   {
     id: 'slide-what-to-do-002',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Wer ist die Quelle?',
+    poll: null,
+    shim: true,
+    content: [
+      <div style={{ textAlign: 'center', fontSize: '3rem', fontWeight: 300 }}>
+        <p>
+          Allgemeine Faustregel:
+          <br />
+          Social-Media ist <strong>KEINE</strong> Newsquelle!
+        </p>
+      </div>,
+    ],
+  },
+  {
+    id: 'slide-what-to-do-003',
     type: 'image',
     url: 'background.png',
     headline: 'Hinterfrage die Inhalte',
@@ -115,7 +155,7 @@ export const SLIDES = [
     ],
   },
   {
-    id: 'slide-what-to-do-003',
+    id: 'slide-what-to-do-004',
     type: 'image',
     url: 'background.png',
     headline: 'Rückwärts Bildersuche',
@@ -124,7 +164,7 @@ export const SLIDES = [
     content: ['slides/reverse-image.png'],
   },
   {
-    id: 'slide-what-to-do-004',
+    id: 'slide-what-to-do-005',
     type: 'image',
     url: 'background.png',
     headline: 'Wasserzeichen',
@@ -145,7 +185,7 @@ export const SLIDES = [
     ],
   },
   {
-    id: 'slide-what-to-do-004',
+    id: 'slide-what-to-do-006',
     type: 'image',
     url: 'background.png',
     headline: 'Wasserzeichen',
@@ -203,7 +243,7 @@ export const SLIDES = [
       'slides/integrity-1.png',
       <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
         <p>
-          Der 17 Jährige Huxley Westemeier entwickelt ein System namens
+          Der 17 Jährige Huxley Westemeier (USA) entwickelt ein System namens
           Integrity zur generellen Erkennung von KI generierten Bildern.
           <br />
           <br />
@@ -214,26 +254,43 @@ export const SLIDES = [
     ],
   },
   {
-    id: 'slide-ai-001',
+    id: 'slide-is-everything-bad-001',
     type: 'image',
     url: 'background.png',
-    poll: {
-      question: 'Is this image AI generated?',
-      options: [
-        {
-          label: 'Yes',
-          content: (
-            <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>Yes</div>
-          ),
-        },
-        {
-          label: 'No',
-          content: (
-            <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>No</div>
-          ),
-        },
-      ],
-      correctIndex: 0,
-    },
+    title: (
+      <>
+        Sind KI-Systeme also
+        <br />
+        nur schlecht?
+      </>
+    ),
+    poll: null,
+    shim: true,
+  },
+  {
+    id: 'slide-is-everything-bad-002',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Geburtstagskarten',
+    poll: null,
+    shim: true,
+    content: ['cards/bcard-1.png', 'cards/bcard-2.png'],
+  },
+  {
+    id: 'slide-is-everything-bad-003',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Weihnachtskarten',
+    poll: null,
+    shim: true,
+    content: ['cards/xmas-1.png', 'cards/xmas-2.png'],
+  },
+  {
+    id: 'slide-end-001',
+    type: 'image',
+    url: 'background.png',
+    title: 'Danke',
+    poll: null,
+    shim: true,
   },
 ];
