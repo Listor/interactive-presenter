@@ -504,9 +504,36 @@ export const SLIDES = [
     id: 'slide-what-others-do-001',
     type: 'image',
     url: 'background.png',
-    title: <>Wird an professionellen Lösungen gearbeitet?</>,
+    title: <>Wird an Lösungen gearbeitet?</>,
     poll: null,
     shim: true,
+  },
+  {
+    id: 'slide-what-others-do-002',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Forensische Analyse',
+    poll: null,
+    shim: true,
+    content: ['slides/forensic-base.png'],
+  },
+  {
+    id: 'slide-what-others-do-003',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Forensische Analyse',
+    poll: null,
+    shim: true,
+    content: ['slides/forensic-vanishing-points.png'],
+  },
+  {
+    id: 'slide-what-others-do-004',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Forensische Analyse',
+    poll: null,
+    shim: true,
+    content: ['slides/forensic-noise-analysis.png'],
   },
   {
     id: 'slide-teenager-001',
@@ -548,14 +575,22 @@ export const SLIDES = [
     content: ['slides/isitfake-2.png'],
   },
   {
+    id: 'slide-is-everything-is-good-001',
+    type: 'image',
+    url: 'background.png',
+    title: <>Überall entstehen Lösungen & Werkzeuge</>,
+    poll: null,
+    shim: true,
+  },
+  {
     id: 'slide-is-everything-bad-001',
     type: 'image',
     url: 'background.png',
     title: (
       <>
-        Sind KI-Systeme also
+        KI-Systeme sind nicht
         <br />
-        nur schlecht?
+        per se schlecht
       </>
     ),
     poll: null,
