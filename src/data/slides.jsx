@@ -457,8 +457,8 @@ export const SLIDES = [
           <br />
           <br />
           Sie basieren auf einem offenen Standard, der von Unternehmen und
-          Organisationen wie Adobe, Microsoft, OpenAI, Meta und Amazon getragen
-          werden.
+          Organisationen wie Adobe, Microsoft, OpenAI, Meta und Amazon
+          unterstützt wird.
         </p>
       </div>,
     ],
@@ -491,7 +491,8 @@ export const SLIDES = [
       <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
         <p>
           Nicht jeder wird immer die besten Tools verwenden, weshalb wir auch
-          weiterhin sehr professionelle und sehr schlechte Inhalte sehen werden.
+          weiterhin sowhohl sehr professionelle, als auch sehr schlechte Inhalte
+          sehen werden.
           <br />
           <br />
           Deshalb sollte man generell immer auf die Texte und Hände achten.
