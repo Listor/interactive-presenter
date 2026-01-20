@@ -391,7 +391,9 @@ const Presenter = () => {
 
   const showReaction = (text) => {
     const id = Date.now() + Math.random();
-    setMessages((prev) => [...prev, { id, text }]);
+    const left = Math.random() * 80 + 10; // Store position when created
+    const rotation = Math.random() * 20 - 10; // Store rotation when created
+    setMessages((prev) => [...prev, { id, text, left, rotation }]);
     setTimeout(
       () => setMessages((prev) => prev.filter((m) => m.id !== id)),
       5000
@@ -521,10 +523,11 @@ const Presenter = () => {
             className="reaction"
             style={{
               position: 'absolute',
-              left: `${Math.random() * 80 + 10}%`,
+              left: `${m.left}%`,
               bottom: '-50px',
               fontSize: '3rem',
               animation: 'floatUp 4s forwards',
+              '--rotation': `${m.rotation}deg`,
             }}
           >
             {m.text}
@@ -536,7 +539,7 @@ const Presenter = () => {
 
       <style>{`
                 @keyframes floatUp {
-                    to { transform: translateY(-110vh) rotate(${Math.random() * 20 - 10}deg); opacity: 0; }
+                    to { transform: translateY(-110vh) rotate(var(--rotation, 0deg)); opacity: 0; }
                 }
             `}</style>
     </div>
