@@ -219,6 +219,28 @@ export const SLIDES = [
     ],
   },
   {
+    id: 'slide-quiz-187',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Welches der beiden Bilder ist KI generiert?',
+    poll: null,
+    shim: true,
+    poll: {
+      question: 'Welches der beiden Bilder ist KI generiert?',
+      options: [
+        {
+          label: 'Links',
+          content: <img src="slides/lego.png" className="slide__img" />,
+        },
+        {
+          label: 'Rechts',
+          content: <img src="slides/lego-2.jpg" className="slide__img" />,
+        },
+      ],
+      correctIndex: 0,
+    },
+  },
+  {
     id: 'slide-videos-001',
     type: 'image',
     url: 'background.png',
