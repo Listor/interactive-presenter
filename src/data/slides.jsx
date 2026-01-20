@@ -223,7 +223,6 @@ export const SLIDES = [
     type: 'image',
     url: 'background.png',
     headline: 'Welches der beiden Bilder ist KI generiert?',
-    poll: null,
     shim: true,
     poll: {
       question: 'Welches der beiden Bilder ist KI generiert?',
@@ -521,6 +520,14 @@ export const SLIDES = [
         </p>
       </div>,
     ],
+  },
+  {
+    id: 'slide-what-others-do-001',
+    type: 'image',
+    url: 'background.png',
+    title: <>Wenn ich mich daran halte bin ich dann sicher?</>,
+    poll: null,
+    shim: true,
   },
   {
     id: 'slide-what-others-do-001',
