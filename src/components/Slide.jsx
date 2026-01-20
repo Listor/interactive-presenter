@@ -57,9 +57,9 @@ const Slide = ({ data, isActive, pollResults, pollPhase, isLast }) => {
           />
         )}
         <div className="network-nodes">
-          <NetworkNode x="19.45%" y="67.6%" color="#2aa7ff" size={8} />
-          <NetworkNode x="70.8%" y="62.4%" color="#ff3b3b" size={5} />
-          <NetworkNode x="61.25%" y="83.2%" color="#2aa7ff" size={5} />
+          <NetworkNode x="19.4%" y="67.42%" color="#2aa7ff" size={8} />
+          <NetworkNode x="70.8%" y="62.3%" color="#ff3b3b" size={5} />
+          <NetworkNode x="61.25%" y="82.8%" color="#2aa7ff" size={7} />
         </div>
       </div>
     );

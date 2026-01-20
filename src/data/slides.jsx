@@ -73,48 +73,6 @@ export const SLIDES = [
     },
   },
   {
-    id: 'slide-code-001',
-    type: 'image',
-    url: 'background.png',
-    shim: true,
-    headline: 'KI Generiert?',
-    poll: {
-      question: 'KI generiert?',
-      options: [
-        {
-          label: 'Ja',
-          content: <img src="slides/real-1.jpg" className="slide__img" />,
-        },
-        {
-          label: 'Nein',
-          content: <img src="slides/empty-1.png" className="slide__img" />,
-        },
-      ],
-      correctIndex: 1,
-    },
-  },
-  {
-    id: 'slide-code-002',
-    type: 'image',
-    url: 'background.png',
-    shim: true,
-    headline: 'KI Generiert?',
-    poll: {
-      question: 'KI generiert?',
-      options: [
-        {
-          label: 'Ja',
-          content: <img src="slides/fake-1.png" className="slide__img" />,
-        },
-        {
-          label: 'Nein',
-          content: <img src="slides/empty-1.png" className="slide__img" />,
-        },
-      ],
-      correctIndex: 1,
-    },
-  },
-  {
     id: 'slide-code-003',
     type: 'image',
     url: 'background.png',
@@ -159,6 +117,69 @@ export const SLIDES = [
     },
   },
   {
+    id: 'slide-code-0033',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
+          content: <img src="slides/hand-fail.png" className="slide__img" />,
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 0,
+    },
+  },
+  {
+    id: 'slide-code-001',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
+          content: <img src="slides/real-1.jpg" className="slide__img" />,
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 1,
+    },
+  },
+  {
+    id: 'slide-code-002',
+    type: 'image',
+    url: 'background.png',
+    shim: true,
+    headline: 'KI Generiert?',
+    poll: {
+      question: 'KI generiert?',
+      options: [
+        {
+          label: 'Ja',
+          content: <img src="slides/fake-1.png" className="slide__img" />,
+        },
+        {
+          label: 'Nein',
+          content: <img src="slides/empty-1.png" className="slide__img" />,
+        },
+      ],
+      correctIndex: 1,
+    },
+  },
+  {
     id: 'slide-code-005',
     type: 'image',
     url: 'background.png',
@@ -178,6 +199,24 @@ export const SLIDES = [
       ],
       correctIndex: 0,
     },
+  },
+  {
+    id: 'slide-quiz-099',
+    type: 'image',
+    url: 'background.png',
+    headline: 'KI generiert?',
+    poll: null,
+    shim: true,
+    content: [
+      'slides/fake-1.png',
+      'slides/fake-3.png',
+      <div style={{ textAlign: 'left', fontSize: '2rem', fontWeight: 300 }}>
+        <p>
+          Solche Bilder kann ich lokal mit meinem Laptop und Offener Software
+          erzeugen.
+        </p>
+      </div>,
+    ],
   },
   {
     id: 'slide-videos-001',
@@ -469,24 +508,6 @@ export const SLIDES = [
     shim: true,
   },
   {
-    id: 'slide-isitfake-001',
-    type: 'image',
-    url: 'background.png',
-    headline: 'Automatischer Faktencheck',
-    poll: null,
-    shim: true,
-    content: ['slides/isitfake-1.png'],
-  },
-  {
-    id: 'slide-isitfake-002',
-    type: 'image',
-    url: 'background.png',
-    headline: 'Automatischer Faktencheck',
-    poll: null,
-    shim: true,
-    content: ['slides/isitfake-2.png'],
-  },
-  {
     id: 'slide-teenager-001',
     type: 'image',
     url: 'background.png',
@@ -506,6 +527,24 @@ export const SLIDES = [
         </p>
       </div>,
     ],
+  },
+  {
+    id: 'slide-isitfake-001',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Automatischer Faktencheck',
+    poll: null,
+    shim: true,
+    content: ['slides/isitfake-1.png'],
+  },
+  {
+    id: 'slide-isitfake-002',
+    type: 'image',
+    url: 'background.png',
+    headline: 'Automatischer Faktencheck',
+    poll: null,
+    shim: true,
+    content: ['slides/isitfake-2.png'],
   },
   {
     id: 'slide-is-everything-bad-001',
