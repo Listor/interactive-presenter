@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import Peer from 'peerjs';
 import { PRESENTER_PEER_ID, MSG, PEER_CONFIG } from '../utils/constants';
 import { SLIDES } from '../data/slides.jsx';
 import Slide from './Slide';
 
 const Presenter = ({ isLocal = false }) => {
+  const activeSlides = useMemo(() => isLocal ? SLIDES.filter(s => !s.hideInLocal) : SLIDES, [isLocal]);
+
   const [peerId, setPeerId] = useState('');
   const [status, setStatus] = useState('Initializing...');
 
@@ -69,7 +71,7 @@ const Presenter = ({ isLocal = false }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        const slide = SLIDES[stateRef.current.currentSlide];
+        const slide = activeSlides[stateRef.current.currentSlide];
         
         if (isLocal && slide && slide.poll && stateRef.current.pollPhase !== 'revealed') {
            // Reveal the poll answer locally without incrementing slide
@@ -96,10 +98,10 @@ const Presenter = ({ isLocal = false }) => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isLocal]);
+  }, [isLocal, activeSlides]);
 
   useEffect(() => {
-    const slide = SLIDES[currentSlide];
+    const slide = activeSlides[currentSlide];
     if (
       slide &&
       slide.poll &&
@@ -112,7 +114,7 @@ const Presenter = ({ isLocal = false }) => {
         setTimeout(() => startPoll(), 500); // Small delay for smooth transition
       }
     }
-  }, [currentSlide, pollPhase, isLocal]);
+  }, [currentSlide, pollPhase, isLocal, activeSlides]);
 
   useEffect(() => {
     if (isLocal) {
@@ -285,7 +287,7 @@ const Presenter = ({ isLocal = false }) => {
   };
 
   const gotoSlide = (index) => {
-    if (index < 0 || index >= SLIDES.length) return;
+    if (index < 0 || index >= activeSlides.length) return;
 
     setCurrentSlide(index);
     // pollPhase reset will trigger effect -> sync
@@ -321,7 +323,7 @@ const Presenter = ({ isLocal = false }) => {
   };
 
   const startPoll = () => {
-    const slide = SLIDES[stateRef.current.currentSlide];
+    const slide = activeSlides[stateRef.current.currentSlide];
     if (!slide.poll) return;
 
     // Prevent restart if already done
@@ -345,7 +347,7 @@ const Presenter = ({ isLocal = false }) => {
 
   const stopPoll = () => {
     // Move to Distribution Phase (Results Hidden)
-    const slide = SLIDES[stateRef.current.currentSlide];
+    const slide = activeSlides[stateRef.current.currentSlide];
     if (!slide.poll) return;
 
     setPollPhase('distribution');
@@ -356,7 +358,7 @@ const Presenter = ({ isLocal = false }) => {
 
   const revealAnswer = () => {
     // Move to Revealed Phase
-    const slide = SLIDES[stateRef.current.currentSlide];
+    const slide = activeSlides[stateRef.current.currentSlide];
     if (!slide.poll) return;
 
     setPollPhase('revealed');
@@ -534,11 +536,11 @@ const Presenter = ({ isLocal = false }) => {
       )}
 
       <Slide
-        data={SLIDES[currentSlide]}
+        data={activeSlides[currentSlide]}
         isActive={true}
         pollResults={pollResults}
         pollPhase={pollPhase}
-        isLast={currentSlide === SLIDES.length - 1}
+        isLast={currentSlide === activeSlides.length - 1}
         isLocal={isLocal}
       />
 

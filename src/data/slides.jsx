@@ -42,6 +42,7 @@ export const SLIDES = [
     headline: 'Code scannen um mitzumachen',
     shim: true,
     content: ['qrcode.svg', 'icons/arrow.svg', 'icons/phone.svg'],
+    hideInLocal: true,
   },
   {
     id: 'slide-start-001',
