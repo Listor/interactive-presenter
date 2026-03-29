@@ -68,9 +68,9 @@ const Presenter = () => {
   // Keyboard Navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'ArrowRight') {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         gotoSlide(stateRef.current.currentSlide + 1);
-      } else if (e.key === 'ArrowLeft') {
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         gotoSlide(stateRef.current.currentSlide - 1);
       }
     };
