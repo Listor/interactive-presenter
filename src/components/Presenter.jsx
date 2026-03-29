@@ -4,7 +4,7 @@ import { PRESENTER_PEER_ID, MSG, PEER_CONFIG } from '../utils/constants';
 import { SLIDES } from '../data/slides.jsx';
 import Slide from './Slide';
 
-const Presenter = () => {
+const Presenter = ({ isLocal = false }) => {
   const [peerId, setPeerId] = useState('');
   const [status, setStatus] = useState('Initializing...');
 
@@ -69,7 +69,26 @@ const Presenter = () => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        gotoSlide(stateRef.current.currentSlide + 1);
+        const slide = SLIDES[stateRef.current.currentSlide];
+        
+        if (isLocal && slide && slide.poll && stateRef.current.pollPhase !== 'revealed') {
+           // Reveal the poll answer locally without incrementing slide
+           setPollPhase('revealed');
+           setPollResults({
+             question: slide.poll.question,
+             options: slide.poll.options,
+             counts: new Array(slide.poll.options.length).fill(0),
+             total: 0,
+             correctIndex: slide.poll.correctIndex,
+           });
+           setCompletedPollIds((prev) => {
+             const next = new Set(prev);
+             next.add(slide.id);
+             return next;
+           });
+        } else {
+           gotoSlide(stateRef.current.currentSlide + 1);
+        }
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         gotoSlide(stateRef.current.currentSlide - 1);
       }
@@ -77,7 +96,7 @@ const Presenter = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isLocal]);
 
   useEffect(() => {
     const slide = SLIDES[currentSlide];
@@ -87,11 +106,20 @@ const Presenter = () => {
       !completedPollIds.has(slide.id) &&
       pollPhase === 'idle'
     ) {
-      setTimeout(() => startPoll(), 500); // Small delay for smooth transition
+      if (isLocal) {
+        setPollPhase('voting');
+      } else {
+        setTimeout(() => startPoll(), 500); // Small delay for smooth transition
+      }
     }
-  }, [currentSlide, pollPhase]);
+  }, [currentSlide, pollPhase, isLocal]);
 
   useEffect(() => {
+    if (isLocal) {
+      setStatus('Ready (Local Mode)');
+      return;
+    }
+    
     let peer;
     let retryTimeout;
 
@@ -151,7 +179,8 @@ const Presenter = () => {
       if (peer) peer.destroy();
       if (retryTimeout) clearTimeout(retryTimeout);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLocal]);
 
   const updateConnectionCount = () => {
     // Filter only open connections for accurate count
@@ -464,41 +493,45 @@ const Presenter = () => {
       }}
     >
       {/* Connection Status in Top Right */}
-      <div
-        className="floating-box box-small"
-        style={{
-          position: 'absolute',
-          top: 20,
-          right: 20,
-          zIndex: 100,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          fontSize: '1rem',
-        }}
-      >
-        <span>{connectionCount}</span>
-        <img
-          src="icons/users.svg"
-          alt="Users"
-          style={{ width: '20px', height: '20px' }}
-        />
-      </div>
+      {!isLocal && (
+        <div
+          className="floating-box box-small"
+          style={{
+            position: 'absolute',
+            top: 20,
+            right: 20,
+            zIndex: 100,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '1rem',
+          }}
+        >
+          <span>{connectionCount}</span>
+          <img
+            src="icons/users.svg"
+            alt="Users"
+            style={{ width: '20px', height: '20px' }}
+          />
+        </div>
+      )}
 
       {/* Status (Hidden in prod usually) */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 10,
-          left: 10,
-          zIndex: 100,
-          color: 'rgba(255,255,255,0.3)',
-          pointerEvents: 'none',
-          fontSize: '10px',
-        }}
-      >
-        ID: {peerId}
-      </div>
+      {!isLocal && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 10,
+            left: 10,
+            zIndex: 100,
+            color: 'rgba(255,255,255,0.3)',
+            pointerEvents: 'none',
+            fontSize: '10px',
+          }}
+        >
+          ID: {peerId}
+        </div>
+      )}
 
       <Slide
         data={SLIDES[currentSlide]}
@@ -506,6 +539,7 @@ const Presenter = () => {
         pollResults={pollResults}
         pollPhase={pollPhase}
         isLast={currentSlide === SLIDES.length - 1}
+        isLocal={isLocal}
       />
 
       <div

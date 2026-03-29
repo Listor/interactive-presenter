@@ -14,8 +14,16 @@ function App() {
       const params = new URLSearchParams(window.location.search);
       const isPresenterParam = params.get('presenter');
       const isControllerParam = params.get('controller');
+      const isLocalParam = params.get('local');
 
       // 1. Explicit URL Overrides
+      if (isLocalParam === 'true') {
+        localStorage.setItem('role', 'local');
+        setRole('local');
+        window.history.replaceState({}, '', window.location.pathname);
+        return;
+      }
+
       if (isPresenterParam === 'true') {
         localStorage.setItem('role', 'presenter');
         setRole('presenter');
@@ -46,14 +54,21 @@ function App() {
 
         if (storedRole === 'presenter') {
           setRole('presenter');
+        } else if (storedRole === 'local') {
+          setRole('local');
         } else if (storedRole === 'controller') {
           setWantsController(true); // Want to be controller
           setRole('participant'); // Start as participant
         } else {
           setRole('participant');
         }
-      } catch (err) {
-        setRole('presenter');
+      } catch (err) { // eslint-disable-line no-unused-vars
+        const storedRole = localStorage.getItem('role');
+        if (storedRole === 'local') {
+          setRole('local');
+        } else {
+          setRole('presenter');
+        }
       }
     };
 
@@ -76,6 +91,7 @@ function App() {
     <>
       {role === 'presenter' && <LandscapePrompt />}
       {role === 'presenter' && <Presenter />}
+      {role === 'local' && <Presenter isLocal={true} />}
       {role === 'controller' && <Controller />}
       {role === 'participant' && (
         <Participant

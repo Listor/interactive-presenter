@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import NetworkNode from './NetworkNode';
 import Socials from './Socials';
 
-const Slide = ({ data, isActive, pollResults, pollPhase, isLast }) => {
+const Slide = ({ data, isActive, pollResults, pollPhase, isLast, isLocal = false }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -175,12 +175,16 @@ const Slide = ({ data, isActive, pollResults, pollPhase, isLast }) => {
                         >
                           {opt.label}
                         </div>
-                        <div style={{ fontSize: '3rem', fontWeight: 'bold' }}>
-                          {pct}%
-                        </div>
-                        <div style={{ fontSize: '1.2rem', opacity: 0.8 }}>
-                          {count} Votes
-                        </div>
+                        {!isLocal && (
+                          <>
+                            <div style={{ fontSize: '3rem', fontWeight: 'bold' }}>
+                              {pct}%
+                            </div>
+                            <div style={{ fontSize: '1.2rem', opacity: 0.8 }}>
+                              {count} Votes
+                            </div>
+                          </>
+                        )}
                         {isCorrect && (
                           <div
                             style={{
