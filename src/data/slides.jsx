@@ -177,7 +177,7 @@ export const SLIDES = [
           content: <img src="slides/empty-1.png" className="slide__img" />,
         },
       ],
-      correctIndex: 1,
+      correctIndex: 0,
     },
   },
   {
